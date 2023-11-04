@@ -20,19 +20,11 @@ async function Home() {
 
       {/*Mapear y mostrar el resto de los usuarios*/}
       {user.map(({ attributes, id }) => (
-        <Link key={user.id} href="#">
+        <Link key={id} href="#">
           <h1 className="flex flex-col justify-between p-4 leading-normal">{attributes.User_Name}</h1>
         </Link>
       ))}
-      {/* <div>
-      <input
-          type="text"
-          placeholder="Ingresa un nombre"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-        /> 
-        <button onClick={compararNombres}>Comparar</button>
-      </div> */}
+      
     </main>
   );
 }

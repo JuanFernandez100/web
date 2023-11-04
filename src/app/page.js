@@ -1,50 +1,38 @@
-import { useState } from "react";
 import Link from "next/link";
-import { API_URL } from "./config";
-import { useClient } from "next/client";
-
-async function getUser() {
-  const res = await fetch(`${API_URL}/logins?populate=*`);
-
-  if (!res.ok) {
-    throw new Error('Something went wrong');
-  }
-  const { data } = await res.json();
-  return data;
-}
+import{getUser} from "./service/usuario";
 
 async function Home() {
-  useClient();
-  const games = await getUser();
-  const [inputValue, setInputValue] = useState("");
-  console.log(games);
+  const user = await getUser();
+  
+  console.log(user);
 
-  // Extraer el primer juego de la lista
-  const firstGame = games[0];
+  // Extraer el primer usuario de la lista
+  const firstUser = user[1];
+  
 
   return (
     <main className="flex-col items-center min-h-screen p-24">
-      {/* Mostrar el primer juego aparte */}
+      {/* Mostrar el primer usuario aparte */}
       <div className="mb-4">
-        <label htmlFor="firstGame">Primer Juego:</label>
-        <h1 id="firstGame" className="p-4 leading-normal">{firstGame.attributes.User_Name}</h1>
+        <label htmlFor="firstUser">Primer Juego:</label>
+        <h1 id="firstUser" className="p-4 leading-normal">{firstUser.attributes.User_Name}</h1>
       </div>
 
-      {/*Mapear y mostrar el resto de los juegos*/}
-      {games.slice(1).map(({ attributes, id }) => (
-        <Link key={id} href="#">
+      {/*Mapear y mostrar el resto de los usuarios*/}
+      {user.map(({ attributes, id }) => (
+        <Link key={user.id} href="#">
           <h1 className="flex flex-col justify-between p-4 leading-normal">{attributes.User_Name}</h1>
         </Link>
       ))}
-      <div>
+      {/* <div>
       <input
           type="text"
           placeholder="Ingresa un nombre"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
-        />
+        /> 
         <button onClick={compararNombres}>Comparar</button>
-      </div>
+      </div> */}
     </main>
   );
 }
